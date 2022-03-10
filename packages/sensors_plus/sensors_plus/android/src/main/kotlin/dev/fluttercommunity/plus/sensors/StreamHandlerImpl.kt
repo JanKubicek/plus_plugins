@@ -31,10 +31,11 @@ internal class StreamHandlerImpl(
             override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
 
             override fun onSensorChanged(event: SensorEvent) {
-                val sensorValues = DoubleArray(event.values.size)
+                val sensorValues = DoubleArray(event.values.size + 1)
                 event.values.forEachIndexed { index, value ->
                     sensorValues[index] = value.toDouble()
                 }
+                sensorValues[event.values.size] = event.timestamp.toDouble()
                 events.success(sensorValues)
             }
         }
